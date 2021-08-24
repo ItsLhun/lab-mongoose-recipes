@@ -14,14 +14,55 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
-  .then(self => {
+  .then((self) => {
     console.log(`Connected to the database: "${self.connection.name}"`);
     // Before adding any recipes to the database, let's remove all existing ones
-    return Recipe.deleteMany()
+
+    return Recipe.deleteMany();
   })
   .then(() => {
-    // Run your code here, after you have insured that the connection was made
+    //Iteration 2
+    // return Recipe.create({
+    //   title: 'Bolognesa',
+    //   level: 'Amateur Chef',
+    //   ingredients: ['meat', 'oregano', 'tomato'],
+    //   cuisine: 'italian',
+    //   dishType: 'main_course',
+    //   duration: 45,
+    //   creator: 'Genaro'
+    // });
+    // iteration 3
+    return Recipe.insertMany(data);
   })
-  .catch(error => {
+  .then(() => {
+    // Iteration 4
+
+    // return Recipe.findOneAndUpdate(
+    //   { title: { $regex: 'Rigatoni alla Genovese' } },
+    //   { duration: 100 },
+    //   { new: true }
+    // );
+
+    //Iteration 5
+    return Recipe.deleteOne({ title: { $regex: 'Carrot Cake' } });
+  })
+  .then(() => {
+    // Iteration 2
+    // console.log('Addded correctly: ', recipe.title);
+
+    // iteration 3
+    // for (recipe of recipes) {
+    //   console.log('Added: ', recipe.title);
+    // }
+    //Iteration 4
+    // console.log('The recipe ', recipe, ' was updated successfully');
+    //Iteration 5
+    console.log('Removed successfully!');
+    return mongoose.disconnect();
+  })
+  .then(() => {
+    console.log('The connection has been destroyed');
+  })
+  .catch((error) => {
     console.error('Error connecting to the database', error);
   });
